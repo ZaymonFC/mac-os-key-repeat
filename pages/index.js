@@ -135,7 +135,10 @@ const About = () => {
     <VStack spacing={4} mt={16}>
       <Box>
         <FontAwesomeIcon icon={faGithub} />
-        <Link> View the source on GitHub</Link>
+        <Link href="https://github.com/ZaymonFC/mac-os-key-repeat">
+          {" "}
+          View the source on GitHub
+        </Link>
       </Box>
       <Box>
         <FontAwesomeIcon icon={faTwitter} />
