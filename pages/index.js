@@ -100,7 +100,7 @@ const Form = () => {
         mt={8}
         mb={8}
         value={buffer}
-        placeholder="Press and hold a key in me. (Implemented in Browser)"
+        placeholder="Press and hold a key (Implemented in Browser)"
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
       ></Textarea>
