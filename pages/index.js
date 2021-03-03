@@ -107,8 +107,12 @@ const Form = () => {
 
       <VStack spacing={4} mb={8} align="stretch">
         <Text>
-          Copy these commands into your terminal to set the chosen key repeat
-          timings:
+          These <em>terminal commands</em> let you set{" "}
+          <strong>key-repeat</strong> beyond the minimum available in{" "}
+          <Code>system preferences</Code>.{" "}
+        </Text>
+        <Text>
+          Copy them into your terminal to set the chosen key repeat timings:
         </Text>
         <Box>
           <Code>defaults write -g InitialKeyRepeat -int {delay}</Code>
