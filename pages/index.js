@@ -151,6 +151,9 @@ const About = () => {
           Follow me on twitter @ZaymonTheUnwise
         </Link>
       </Box>
+      <Box>
+        <Link href="https://ko-fi.com/zaymon_antonio">Find this useful? Buy me a coffee on Ko-Fi ☕️ ✌️</Link>
+      </Box>
     </VStack>
   );
 };
