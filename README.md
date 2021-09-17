@@ -1,4 +1,4 @@
-This project provides a simple tool to preview and fine tune different Mac OS key-repeat settings. 
+This project provides a simple tool to preview and fine tune different Mac OS key-repeat settings in the browser. 
 
 [Try it out](https://mac-os-key-repeat.vercel.app/)
 
