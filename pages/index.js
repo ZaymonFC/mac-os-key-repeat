@@ -146,9 +146,9 @@ const About = () => {
       </Box>
       <Box>
         <FontAwesomeIcon icon={faTwitter} />
-        <Link href="https://twitter.com/ZaymonTheUnwise">
+        <Link href="https://twitter.com/ZaymonAntonio">
           {" "}
-          Follow me on twitter @ZaymonTheUnwise
+          Follow me on twitter @ZaymonAntonio
         </Link>
       </Box>
       <Box>
