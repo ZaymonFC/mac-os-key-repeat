@@ -83,11 +83,11 @@ export const { styled, css, getCssText } = createStitches({
     bp3: "(min-width: 1024px)",
   },
   utils: {
-    px: (value: string) => ({
+    px: (value) => ({
       paddingLeft: value,
       paddingRight: value,
     }),
-    py: (value: string) => ({
+    py: (value) => ({
       paddingTop: value,
       paddingBottom: value,
     }),
