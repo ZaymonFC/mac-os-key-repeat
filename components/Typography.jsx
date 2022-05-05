@@ -20,7 +20,7 @@ export const Heading = styled("div", {
 });
 
 export const Text = styled("p", {
-  fontFamily: "Iosevka SS05",
+  fontFamily: "$mono",
   fontSize: "$2",
   fontWeight: "normal",
   variants: {
@@ -36,16 +36,29 @@ export const SubText = styled("p", {
 });
 
 export const Link = styled("a", {
+  fontFamily: "$mono",
+  fontSize: "$2",
   color: "white",
   "&:hover": {
     color: "$orange",
   },
   textDecoration: "underline",
+
   variants: {
     invert: { true: { color: "$orange", "&:hover": { color: "white" } } },
   },
 });
 
-export const SubLink = styled(Link, {
-  fontSize: "$1",
+export const Code = styled("code", {
+  paddingInline: "$3",
+  paddingBlock: "$1",
+
+  color: "$orange",
+  fontSize: "$2",
+  fontFamily: "$mono",
+
+  borderColor: "$orange",
+  borderStyle: "solid",
+  borderWidth: 1,
+  borderRadius: "$3",
 });

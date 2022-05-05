@@ -9,8 +9,11 @@ import { VSpacer } from "../components/Spacers";
 const Page = styled("div", {
   backgroundColor: "$background",
   color: "white",
-  height: "100vh",
+  minHeight: "100vh",
   fontSize: 18,
+
+  paddingBlock: "$6",
+  paddingInline: "$4",
 });
 
 const Header = () => (
@@ -34,7 +37,6 @@ export default function Home() {
       </Head>
       <Page>
         <Container>
-          <VSpacer size="lg" />
           <Header />
           <VSpacer size="xl" />
           <KeyRepeat />

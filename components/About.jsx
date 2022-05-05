@@ -1,4 +1,5 @@
-import { Box, Link, VStack } from "@chakra-ui/react";
+import { Box, VStack } from "@chakra-ui/react";
+import { Link } from "./Typography";
 import { faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

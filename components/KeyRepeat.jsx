@@ -1,15 +1,35 @@
 import {
   Box,
-  Code,
   Slider,
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
-  Text,
   Textarea,
   VStack,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
+import { styled } from "../Stitches.config";
+import { VSpacer } from "./Spacers";
+import { Text, Code } from "./Typography";
+
+const KeyRepeatInput = styled("textarea", {
+  fontFamily: "$mono",
+  color: "white",
+
+  width: "100%",
+  padding: "$4",
+
+  backgroundColor: "$background",
+
+  borderColor: "$orange",
+  borderStyle: "solid",
+  borderWidth: "$1",
+
+  "&:focus": {
+    outline: "none",
+    boxShadow: "0 0 0 1px #ffaa48",
+  },
+});
 
 const KeyRepeat = () => {
   const initialDelay = 12;
@@ -70,6 +90,7 @@ const KeyRepeat = () => {
           <SliderThumb />
         </Slider>
       </Box>
+
       <Box w={[128, 256, 512]}>
         <Text>Key repeat speed: {repeat * 15} ms</Text>
         <Slider
@@ -86,19 +107,21 @@ const KeyRepeat = () => {
         </Slider>
       </Box>
 
-      <Textarea
-        mt={8}
-        mb={8}
+      <VSpacer size="lg" />
+
+      <KeyRepeatInput
         value={buffer}
         placeholder="Press and hold a key (Implemented in Browser)"
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
-      ></Textarea>
+      />
 
-      <VStack spacing={4} mb={8} align="stretch">
+      <VSpacer size="md" />
+
+      <VStack spacing={4} align="stretch">
         <Text>
           These <em>terminal commands</em> let you set{" "}
-          <strong>key-repeat</strong> beyond the minimum available in{" "}
+          <strong>key-repeat</strong> values below the minimum available in{" "}
           <Code>system preferences</Code>.{" "}
         </Text>
         <Text>
@@ -111,6 +134,9 @@ const KeyRepeat = () => {
           <Code>defaults write -g KeyRepeat -int {repeat}</Code>
         </Box>
       </VStack>
+
+      <VSpacer size="lg" />
+
       <VStack spacing={4} align="stretch">
         <Text>
           Copy this command to disable <em>press and hold</em> for special
