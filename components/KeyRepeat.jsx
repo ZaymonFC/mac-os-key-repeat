@@ -4,9 +4,9 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
-  Textarea,
   VStack,
 } from "@chakra-ui/react";
+import { atom, useAtom } from "jotai";
 import { useCallback, useEffect, useState } from "react";
 import { styled } from "../Stitches.config";
 import { VSpacer } from "./Spacers";
@@ -31,11 +31,33 @@ const KeyRepeatInput = styled("textarea", {
   },
 });
 
+const INITIAL_DELAY = 12;
+const INITIAL_REPEAT = 2;
+
+const delayAtom = atom(INITIAL_DELAY);
+const repeatAtom = atom(INITIAL_REPEAT);
+
+const MillisecondSlider = ({ valueAtom, label }) => {
+  const [value, setValue] = useAtom(valueAtom);
+
+  return (
+    <Box w={[128, 256, 512]}>
+      <Text>
+        {label}: {value * 15} ms
+      </Text>
+      <Slider onChange={setValue} value={value} min={1} max={20}>
+        <SliderTrack>
+          <SliderFilledTrack />
+        </SliderTrack>
+        <SliderThumb />
+      </Slider>
+    </Box>
+  );
+};
+
 const KeyRepeat = () => {
-  const initialDelay = 12;
-  const initialRepeat = 2;
-  let [delay, setDelay] = useState(initialDelay);
-  let [repeat, setRepeat] = useState(initialRepeat);
+  const [delay] = useAtom(delayAtom);
+  const [repeat] = useAtom(repeatAtom);
   let [isHolding, setIsHolding] = useState(null);
   let [buffer, setBuffer] = useState(undefined);
   let [counter, setCounter] = useState(0);
@@ -75,37 +97,8 @@ const KeyRepeat = () => {
 
   return (
     <>
-      <Box w={[128, 256, 512]}>
-        <Text>Initial delay: {delay * 15} ms</Text>
-        <Slider
-          aria-label="slider-ex-1"
-          onChange={setDelay}
-          defaultValue={initialDelay}
-          min={1}
-          max={40}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-      </Box>
-
-      <Box w={[128, 256, 512]}>
-        <Text>Key repeat speed: {repeat * 15} ms</Text>
-        <Slider
-          aria-label="slider-ex-1"
-          onChange={setRepeat}
-          defaultValue={initialRepeat}
-          min={1}
-          max={20}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb />
-        </Slider>
-      </Box>
+      <MillisecondSlider valueAtom={delayAtom} label="Initial delay" />
+      <MillisecondSlider valueAtom={repeatAtom} label="Key repeat interval" />
 
       <VSpacer size="lg" />
 
@@ -117,7 +110,16 @@ const KeyRepeat = () => {
       />
 
       <VSpacer size="md" />
+    </>
+  );
+};
 
+const Commands = () => {
+  const [delay] = useAtom(delayAtom);
+  const [repeat] = useAtom(repeatAtom);
+
+  return (
+    <div>
       <VStack spacing={4} align="stretch">
         <Text>
           These <em>terminal commands</em> let you set{" "}
@@ -146,8 +148,15 @@ const KeyRepeat = () => {
           <Code>defaults write -g ApplePressAndHoldEnabled -bool false</Code>
         </Box>
       </VStack>
-    </>
+    </div>
   );
 };
 
-export default KeyRepeat;
+const KeyRepeatApp = () => (
+  <>
+    <KeyRepeat />
+    <Commands />
+  </>
+);
+
+export default KeyRepeatApp;
