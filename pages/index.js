@@ -53,9 +53,11 @@ export default function Home() {
         <Container>
           <Header />
           <VSpacer size="xl" />
+
           <KeyRepeat />
 
-          <About></About>
+          <VSpacer size="xxl" />
+          <About />
         </Container>
       </Page>
     </>

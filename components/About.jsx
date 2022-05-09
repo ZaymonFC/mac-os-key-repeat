@@ -1,29 +1,29 @@
-import { VStack } from "@chakra-ui/react";
+import { Stack } from "@chakra-ui/react";
 import { Link } from "./Typography";
-import { faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  TwitterLogoIcon,
+  GitHubLogoIcon,
+  PersonIcon,
+} from "@radix-ui/react-icons";
 
 const About = () => {
   return (
-    <VStack spacing={4} mt={16}>
-      <div>
-        <FontAwesomeIcon icon={faGithub} />
+    <Stack spacing={4}>
+      <Stack direction="row" alignItems="center">
+        <GitHubLogoIcon />{" "}
         <Link href="https://github.com/ZaymonFC/mac-os-key-repeat">
-          {" "}
           View the source on GitHub
         </Link>
-      </div>
-      <div>
-        <FontAwesomeIcon icon={faTwitter} />
-        <Link href="https://twitter.com/ZaymonAntonio">
-          {" "}
-          Follow me on twitter @ZaymonAntonio
-        </Link>
-      </div>
-      <div>
+      </Stack>
+      <Stack direction="row" alignItems="center">
+        <TwitterLogoIcon />{" "}
+        <Link href="https://twitter.com/ZaymonAntonio">@ZaymonAntonio</Link>
+      </Stack>
+      <Stack direction="row" alignItems="center">
+        <PersonIcon />
         <Link href="https://www.zaymon.dev">About me</Link>
-      </div>
-    </VStack>
+      </Stack>
+    </Stack>
   );
 };
 

@@ -4,6 +4,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
   SliderTrack,
+  Stack,
   VStack,
 } from "@chakra-ui/react";
 import { atom, useAtom } from "jotai";
@@ -12,6 +13,7 @@ import { pure } from "../lib/utils";
 import { styled } from "../Stitches.config";
 import { VSpacer } from "./Spacers";
 import { Code, Text } from "./Typography";
+import { UpdateIcon, TimerIcon } from "@radix-ui/react-icons";
 
 const KeyRepeatInput = styled("textarea", {
   fontFamily: "$mono",
@@ -38,17 +40,20 @@ const INITIAL_REPEAT = 2;
 const delayAtom = atom(INITIAL_DELAY);
 const repeatAtom = atom(INITIAL_REPEAT);
 
-const MillisecondSlider = ({ valueAtom, label }) => {
+const MillisecondSlider = ({ valueAtom, icon, label }) => {
   const [value, setValue] = useAtom(valueAtom);
 
   return (
-    <Box w={[128, 256, 512]}>
-      <Text>
-        {label}: {value * 15} ms
-      </Text>
+    <Box maxWidth={300}>
+      <Stack direction="row" alignItems="center">
+        {icon}
+        <Text>
+          {label}: {value * 15} ms
+        </Text>
+      </Stack>
       <Slider onChange={setValue} value={value} min={1} max={20}>
-        <SliderTrack>
-          <SliderFilledTrack />
+        <SliderTrack bg="whiteAlpha.500">
+          <SliderFilledTrack bg="white" />
         </SliderTrack>
         <SliderThumb />
       </Slider>
@@ -58,8 +63,16 @@ const MillisecondSlider = ({ valueAtom, label }) => {
 
 const KeyRepeatControls = () => (
   <>
-    <MillisecondSlider valueAtom={delayAtom} label="Initial delay" />
-    <MillisecondSlider valueAtom={repeatAtom} label="Key repeat interval" />
+    <MillisecondSlider
+      valueAtom={delayAtom}
+      icon={<TimerIcon />}
+      label="Initial delay"
+    />
+    <MillisecondSlider
+      valueAtom={repeatAtom}
+      icon={<UpdateIcon />}
+      label="Key repeat interval"
+    />
   </>
 );
 
@@ -91,10 +104,8 @@ const Commands = () => {
         <Text>
           These <em>terminal commands</em> let you set{" "}
           <strong>key-repeat</strong> values below the minimum available in{" "}
-          <Code>system preferences</Code>.{" "}
-        </Text>
-        <Text>
-          Copy them into your terminal to set the chosen key repeat timings:
+          <em>system preferences</em>. Copy them into your terminal to set the
+          chosen key repeat timings:
         </Text>
         <Box>
           <Code>defaults write -g InitialKeyRepeat -int {delay}</Code>
@@ -102,11 +113,8 @@ const Commands = () => {
         <Box>
           <Code>defaults write -g KeyRepeat -int {repeat}</Code>
         </Box>
-      </VStack>
 
-      <VSpacer size="lg" />
-
-      <VStack spacing={4} align="stretch">
+        <VSpacer size="xs" />
         <Text>
           Copy this command to disable <em>press and hold</em> for special
           characters:
@@ -114,6 +122,11 @@ const Commands = () => {
         <Box>
           <Code>defaults write -g ApplePressAndHoldEnabled -bool false</Code>
         </Box>
+        <VSpacer size="xs" />
+        <Text>
+          <em>Note:</em> You must log out or restart for these changes to take
+          effect.
+        </Text>
       </VStack>
     </div>
   );
