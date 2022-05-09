@@ -7,10 +7,11 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { atom, useAtom } from "jotai";
-import { useCallback, useEffect, useState } from "react";
+import useKeyRepeat from "../hooks/useKeyRepeat";
+import { pure } from "../lib/utils";
 import { styled } from "../Stitches.config";
 import { VSpacer } from "./Spacers";
-import { Text, Code } from "./Typography";
+import { Code, Text } from "./Typography";
 
 const KeyRepeatInput = styled("textarea", {
   fontFamily: "$mono",
@@ -55,62 +56,28 @@ const MillisecondSlider = ({ valueAtom, label }) => {
   );
 };
 
+const KeyRepeatControls = () => (
+  <>
+    <MillisecondSlider valueAtom={delayAtom} label="Initial delay" />
+    <MillisecondSlider valueAtom={repeatAtom} label="Key repeat interval" />
+  </>
+);
+
+const delayMsAtom = atom((get) => get(delayAtom) * 15);
+const repeatMsAtom = atom((get) => get(repeatAtom) * 15);
+
 const KeyRepeat = () => {
-  const [delay] = useAtom(delayAtom);
-  const [repeat] = useAtom(repeatAtom);
-  let [isHolding, setIsHolding] = useState(null);
-  let [buffer, setBuffer] = useState(undefined);
-  let [counter, setCounter] = useState(0);
-
-  const onKeyDown = (event) => {
-    if (isHolding) return; // Don't set the initial state again for OS key repeats
-
-    let key = event.key;
-    setIsHolding([true, key]);
-    setBuffer(key);
-  };
-
-  const onKeyUp = () => {
-    setIsHolding(null);
-    setBuffer("");
-    setCounter(0);
-  };
-
-  const doTheThing = useCallback(() => {
-    if (!isHolding) {
-      return;
-    }
-
-    let [d, r] = [delay, repeat];
-
-    if (counter > d && (counter - d) % r == 0) {
-      setBuffer((buffer += isHolding[1]));
-    }
-
-    setCounter(counter + 1);
-  }, [isHolding, delay, repeat, counter, setCounter, buffer, setBuffer]);
-
-  useEffect(() => {
-    const t = setInterval(doTheThing, 15);
-    return () => clearInterval(t);
-  });
+  const { down, out, buffer } = useKeyRepeat(delayMsAtom, repeatMsAtom);
 
   return (
-    <>
-      <MillisecondSlider valueAtom={delayAtom} label="Initial delay" />
-      <MillisecondSlider valueAtom={repeatAtom} label="Key repeat interval" />
-
-      <VSpacer size="lg" />
-
-      <KeyRepeatInput
-        value={buffer}
-        placeholder="Press and hold a key (Implemented in Browser)"
-        onKeyDown={onKeyDown}
-        onKeyUp={onKeyUp}
-      />
-
-      <VSpacer size="md" />
-    </>
+    <KeyRepeatInput
+      placeholder="Press and hold a key (Implemented in Browser)"
+      value={buffer}
+      onKeyDown={down}
+      onKeyUp={out}
+      onBlur={out}
+      onChange={pure(null)}
+    />
   );
 };
 
@@ -154,7 +121,10 @@ const Commands = () => {
 
 const KeyRepeatApp = () => (
   <>
+    <KeyRepeatControls />
+    <VSpacer size="lg" />
     <KeyRepeat />
+    <VSpacer size="lg" />
     <Commands />
   </>
 );
