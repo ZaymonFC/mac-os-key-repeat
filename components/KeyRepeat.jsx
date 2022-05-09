@@ -13,7 +13,7 @@ import { pure } from "../lib/utils";
 import { styled } from "../Stitches.config";
 import { VSpacer } from "./Spacers";
 import { Code, Text } from "./Typography";
-import { UpdateIcon, TimerIcon } from "@radix-ui/react-icons";
+import { UpdateIcon, LapTimerIcon } from "@radix-ui/react-icons";
 
 const KeyRepeatInput = styled("textarea", {
   fontFamily: "$mono",
@@ -65,7 +65,7 @@ const KeyRepeatControls = () => (
   <>
     <MillisecondSlider
       valueAtom={delayAtom}
-      icon={<TimerIcon />}
+      icon={<LapTimerIcon />}
       label="Initial delay"
     />
     <MillisecondSlider
