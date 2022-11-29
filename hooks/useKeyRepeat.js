@@ -1,15 +1,7 @@
 import { useAtom } from "jotai";
 import { useMemo, useState } from "react";
-import {
-  delay,
-  interval,
-  map,
-  merge,
-  Subject,
-  switchMap,
-  takeUntil,
-  throttle,
-} from "rxjs";
+import { merge, interval, Subject, takeUntil } from "rxjs";
+import { delay, map, switchMap, throttle } from "rxjs/operators";
 import useSubscription from "../hooks/useSubscription";
 import { pure } from "../lib/utils";
 
@@ -32,12 +24,15 @@ const useKeyRepeat = (delayMsAtom, repeatMsAtom) => {
 
   const put$ = useMemo(() => merge(head$, tail$), [head$, tail$]);
 
-  useSubscription(() => put$.subscribe((v) => setBuffer((b) => b + v)), [put$]);
+  useSubscription(
+    () => put$.subscribe((v) => setBuffer((b) => b + v)),
+    [put$, setBuffer]
+  );
   useSubscription(() => up$.subscribe((_) => setBuffer("")), [up$, setBuffer]);
 
   return {
     down: (event) => down$.next(event.key),
-    out: () => up$.next(),
+    out: (event) => up$.next(event.key),
     buffer,
   };
 };
