@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { useMemo, useState } from "react";
-import { merge, interval, Subject, takeUntil } from "rxjs";
+import { interval, merge, Subject, takeUntil } from "rxjs";
 import { delay, map, switchMap, throttle } from "rxjs/operators";
 import useSubscription from "../hooks/useSubscription";
 import { pure } from "../lib/utils";

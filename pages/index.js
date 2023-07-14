@@ -7,13 +7,15 @@ import { styled } from "../Stitches.config";
 import { VSpacer } from "../components/Spacers";
 
 const Page = styled("div", {
-  backgroundColor: "$background",
-  color: "white",
+  backgroundImage: "$gradients$background",
+  color: "$type",
   minHeight: "100vh",
   fontSize: 18,
 
   paddingBlock: "$6",
   paddingInline: "$4",
+
+  marginBlock: "$6",
 });
 
 const Header = () => (

@@ -29,6 +29,7 @@ export const Text = styled("p", {
 });
 
 export const SubText = styled("p", {
+  color: "$typeHighlight",
   fontSize: "$1",
   variants: {
     ...TextVariants,
@@ -36,6 +37,7 @@ export const SubText = styled("p", {
 });
 
 export const Link = styled("a", {
+  color: "$typeHighlight",
   fontFamily: "$mono",
   fontSize: "$2",
   color: "white",

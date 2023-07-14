@@ -6,6 +6,10 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+html {
+  background-color: rgb(44, 48, 19);
+}
+
 a {
   color: inherit;
   text-decoration: none;

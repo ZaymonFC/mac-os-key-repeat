@@ -14,19 +14,25 @@ import { styled } from "../Stitches.config";
 import { VSpacer } from "./Spacers";
 import { Code, Text } from "./Typography";
 import { UpdateIcon, LapTimerIcon } from "@radix-ui/react-icons";
+import { AnimatedNumber } from "./AnimatedNumber";
 
 const KeyRepeatInput = styled("textarea", {
   fontFamily: "$mono",
-  color: "white",
+  color: "$typeHighlight",
 
   width: "100%",
   padding: "$4",
 
-  backgroundColor: "$background",
+  backgroundColor: "rgba(0, 0, 0, 0.0)",
 
   borderColor: "$orange",
   borderStyle: "solid",
   borderWidth: "$1",
+
+  "&::placeholder": {
+    opacity: "0.8",
+    color: "$type",
+  },
 
   "&:focus": {
     outline: "none",
@@ -108,10 +114,15 @@ const Commands = () => {
           chosen key repeat timings:
         </Text>
         <Box>
-          <Code>defaults write -g InitialKeyRepeat -int {delay}</Code>
+          <Code>
+            defaults write -g InitialKeyRepeat -int{" "}
+            <AnimatedNumber value={delay} />
+          </Code>
         </Box>
         <Box>
-          <Code>defaults write -g KeyRepeat -int {repeat}</Code>
+          <Code>
+            defaults write -g KeyRepeat -int <AnimatedNumber value={repeat} />
+          </Code>
         </Box>
 
         <VSpacer size="xs" />
