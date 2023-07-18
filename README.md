@@ -19,5 +19,5 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Contributing
+We appreciate your feedback, suggestions, and contributions to make this project even better! If you encounter any issues or have ideas for improvements, please don't hesitate to [submit an Issue](https://github.com/ZaymonFC/mac-os-key-repeat/issues/new). Pull requests are welcome!
 
-If you encounter any problems or have suggestions for the project please [submit an Issue](https://github.com/ZaymonFC/mac-os-key-repeat/issues/new). PR's welcome!
