@@ -18,3 +18,5 @@ export const useSubscription = (subscribe, deps) => {
     return () => subscription?.unsubscribe();
   }, deps); // eslint-disable-line react-hooks/exhaustive-deps
 };
+
+export default useSubscription;
