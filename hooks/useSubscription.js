@@ -1,9 +1,4 @@
-import React, { useEffect } from 'react';
-
-// Yoinked the name from the concept in swift.
-interface Cancellable {
-  unsubscribe: () => void;
-}
+import React from "react";
 
 /**
  * Provides a wrapper around `React.useEffect` that manages the lifecycle
@@ -17,10 +12,7 @@ interface Cancellable {
  * @param subscribe - function that returns an object with an unsubscribe method.
  * @param deps - dependencies for the subscription. If any of these change, the subscription will be recreated
  */
-export const useSubscription = (
-  subscribe: () => Cancellable | void,
-  deps: React.DependencyList
-) => {
+export const useSubscription = (subscribe, deps) => {
   React.useEffect(() => {
     const subscription = subscribe();
     return () => subscription?.unsubscribe();
