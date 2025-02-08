@@ -40,6 +40,30 @@ const KeyRepeatInput = styled("textarea", {
   },
 });
 
+const TextArea = styled("textarea", {
+  fontFamily: "$mono",
+  color: "$typeHighlight",
+
+  width: "100%",
+  padding: "$4",
+
+  backgroundColor: "rgba(0, 0, 0, 0.0)",
+
+  borderColor: "$orange",
+  borderStyle: "solid",
+  borderWidth: "$1",
+
+  "&::placeholder": {
+    opacity: "0.8",
+    color: "$type",
+  },
+
+  "&:focus": {
+    outline: "none",
+    boxShadow: "0 0 0 1px #ffaa48",
+  },
+});
+
 const INITIAL_DELAY = 12;
 const INITIAL_REPEAT = 2;
 
@@ -89,14 +113,18 @@ const KeyRepeat = () => {
   const { down, out, buffer } = useKeyRepeat(delayMsAtom, repeatMsAtom);
 
   return (
-    <KeyRepeatInput
-      placeholder="Press and hold a key (Implemented in Browser)"
-      value={buffer}
-      onKeyDown={down}
-      onKeyUp={out}
-      onBlur={out}
-      onChange={pure(null)}
-    />
+    <>
+      <KeyRepeatInput
+        placeholder="Press and hold a key (Implemented in Browser)"
+        value={buffer}
+        onKeyDown={down}
+        onKeyUp={out}
+        onBlur={out}
+        onChange={pure(null)}
+      />
+      <VSpacer size="lg" />
+      <TextArea placeholder="Type here to test typing experience" />
+    </>
   );
 };
 
