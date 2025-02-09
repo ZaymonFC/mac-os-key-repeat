@@ -1,19 +1,23 @@
 import { useAtom } from "jotai";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { interval, merge, Subject, takeUntil, of } from "rxjs";
-import { delay, map, switchMap, throttle } from "rxjs/operators";
+import { delay, map, switchMap } from "rxjs/operators";
 import useSubscription from "../hooks/useSubscription";
 import { pure } from "../lib/utils";
 
-const useKeyRepeat = (delayMsAtom, repeatMsAtom) => {
+const SPECIAL_KEYS_REGEX =
+  /^(?:Meta|Control|Alt|Escape|Arrow|Tab|Enter|Shift|CapsLock|Home|End|PageUp|PageDown|F\d+)/;
+
+const useKeyRepeat = (delayMsAtom, repeatMsAtom, autoClearAtom) => {
   const [delayMs] = useAtom(delayMsAtom);
   const [repeatMs] = useAtom(repeatMsAtom);
+  const [autoClear] = useAtom(autoClearAtom);
   const [buffer, setBuffer] = useState("");
 
   const down$ = useMemo(() => new Subject(), []);
   const up$ = useMemo(() => new Subject(), []);
 
-  const head$ = useMemo(() => down$.pipe(throttle((_) => up$)), [down$, up$]);
+  const head$ = useMemo(() => down$, [down$]);
 
   /** Creates a stream that emits a value after a delay, cancellable by up$. */
   const makeDelayStream = (delayMs) => (value) =>
@@ -35,14 +39,35 @@ const useKeyRepeat = (delayMsAtom, repeatMsAtom) => {
   const put$ = useMemo(() => merge(head$, tail$), [head$, tail$]);
 
   useSubscription(
-    () => put$.subscribe((v) => setBuffer((b) => b + v)),
+    () =>
+      put$.subscribe((v) => {
+        if (v === "Backspace") {
+          setBuffer((b) => b.slice(0, -1));
+        } else if (!SPECIAL_KEYS_REGEX.test(v)) {
+          setBuffer((b) => b + v);
+        }
+      }),
     [put$, setBuffer],
   );
-  useSubscription(() => up$.subscribe((_) => setBuffer("")), [up$, setBuffer]);
+
+  const clearBuffer = useCallback(() => setBuffer(""), [setBuffer]);
+
+  useEffect(() => autoClear && clearBuffer(), [autoClear, clearBuffer]);
+
+  useSubscription(
+    () => up$.subscribe(() => autoClear && clearBuffer()),
+    [up$, autoClear, clearBuffer],
+  );
+
+  /** Handles keydown events, rejecting OS-generated key repeats. */
+  const down = useCallback(
+    (event) => !event.repeat && down$.next(event.key),
+    [down$],
+  );
 
   return {
-    down: (event) => down$.next(event.key),
-    out: (event) => up$.next(event.key),
+    down,
+    up: (event) => up$.next(event.key),
     buffer,
   };
 };

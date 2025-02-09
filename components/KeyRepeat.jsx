@@ -5,6 +5,7 @@ import {
   SliderThumb,
   SliderTrack,
   Stack,
+  Switch,
   VStack,
 } from "@chakra-ui/react";
 import { atom, useAtom } from "jotai";
@@ -13,7 +14,7 @@ import { pure } from "../lib/utils";
 import { styled } from "../Stitches.config";
 import { VSpacer } from "./Spacers";
 import { Code, Text } from "./Typography";
-import { UpdateIcon, LapTimerIcon } from "@radix-ui/react-icons";
+import { UpdateIcon, LapTimerIcon, KeyboardIcon } from "@radix-ui/react-icons";
 import { AnimatedNumber } from "./AnimatedNumber";
 
 const KeyRepeatInput = styled("textarea", {
@@ -45,6 +46,7 @@ const INITIAL_REPEAT = 2;
 
 const delayAtom = atom(INITIAL_DELAY);
 const repeatAtom = atom(INITIAL_REPEAT);
+const autoClearAtom = atom(true);
 
 const MillisecondSlider = ({ valueAtom, icon, label }) => {
   const [value, setValue] = useAtom(valueAtom);
@@ -67,6 +69,26 @@ const MillisecondSlider = ({ valueAtom, icon, label }) => {
   );
 };
 
+const BufferToggle = () => {
+  const [autoClear, setAutoClear] = useAtom(autoClearAtom);
+
+  return (
+    <Box maxWidth={300}>
+      <Stack direction="row" alignItems="center">
+        <KeyboardIcon />
+        <Text>Typing mode</Text>
+        <Switch
+          isChecked={!autoClear}
+          onChange={(e) => setAutoClear((a) => !a)}
+          size="sm"
+          colorScheme="yellow"
+          pt={0.5}
+        />
+      </Stack>
+    </Box>
+  );
+};
+
 const KeyRepeatControls = () => (
   <>
     <MillisecondSlider
@@ -79,6 +101,7 @@ const KeyRepeatControls = () => (
       icon={<UpdateIcon />}
       label="Key repeat interval"
     />
+    <BufferToggle />
   </>
 );
 
@@ -86,15 +109,19 @@ const delayMsAtom = atom((get) => get(delayAtom) * 15);
 const repeatMsAtom = atom((get) => get(repeatAtom) * 15);
 
 const KeyRepeat = () => {
-  const { down, out, buffer } = useKeyRepeat(delayMsAtom, repeatMsAtom);
+  const { down, up, buffer } = useKeyRepeat(
+    delayMsAtom,
+    repeatMsAtom,
+    autoClearAtom,
+  );
 
   return (
     <KeyRepeatInput
       placeholder="Press and hold a key (Implemented in Browser)"
       value={buffer}
       onKeyDown={down}
-      onKeyUp={out}
-      onBlur={out}
+      onKeyUp={up}
+      onBlur={up}
       onChange={pure(null)}
     />
   );
