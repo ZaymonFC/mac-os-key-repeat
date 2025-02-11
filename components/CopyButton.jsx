@@ -1,10 +1,19 @@
+import { useState } from "react";
 import { IconButton } from "./Typography";
-import { CopyIcon } from "@radix-ui/react-icons";
+import { CopyIcon, CheckIcon } from "@radix-ui/react-icons";
 
 const CopyButton = ({ value }) => {
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        navigator.clipboard.writeText(value);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1000);
+    };
+
     return (
-        <IconButton onClick={() => navigator.clipboard.writeText(value)}>
-            <CopyIcon />
+        <IconButton onClick={handleCopy}>
+            {copied ? <CheckIcon /> : <CopyIcon />}
         </IconButton>
     );
 };
