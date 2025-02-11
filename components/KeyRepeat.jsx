@@ -146,13 +146,13 @@ const Commands = () => {
           <em>system preferences</em>. Copy them into your terminal to set the
           chosen key repeat timings:
         </Text>
-        <Box alignItems="center">
+        <Box display="flex" alignItems="center" >
           <Code>
             {INITIAL_KEY_REPEAT_COMMAND} <AnimatedNumber value={delay} />
           </Code>
           <CopyButton value={INITIAL_KEY_REPEAT_COMMAND + " " + delay} />
         </Box>
-        <Box alignItems="center">
+        <Box display="flex" alignItems="center" >
           <Code>
             {KEY_REPEAT_COMMAND} <AnimatedNumber value={repeat} />
           </Code>
@@ -164,7 +164,7 @@ const Commands = () => {
           Copy this command to disable <em>press and hold</em> for special
           characters:
         </Text>
-        <Box alignItems="center">
+        <Box display="flex" alignItems="center" >
           <Code>{PRESS_AND_HOLD_COMMAND}</Code>
           <CopyButton value={PRESS_AND_HOLD_COMMAND} />
         </Box>

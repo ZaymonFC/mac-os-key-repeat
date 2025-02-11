@@ -67,6 +67,7 @@ export const Code = styled("code", {
 
 export const IconButton = styled("button", {
   marginLeft: 5,
+  marginRight: 5,
 
   paddingInline: "$3",
   paddingBlock: "$3",
@@ -80,8 +81,8 @@ export const IconButton = styled("button", {
   borderRadius: "$3",
 
   "& > svg": {
-    width: "16px",
-    height: "16px",
+    width: "20px",
+    height: "20px",
   },
 
   "&:hover": {
