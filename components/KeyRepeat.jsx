@@ -7,6 +7,7 @@ import {
   Stack,
   Switch,
   VStack,
+  HStack,
 } from "@chakra-ui/react";
 import { atom, useAtom } from "jotai";
 import useKeyRepeat from "../hooks/useKeyRepeat";
@@ -16,6 +17,7 @@ import { VSpacer } from "./Spacers";
 import { Code, Text } from "./Typography";
 import { UpdateIcon, LapTimerIcon, KeyboardIcon } from "@radix-ui/react-icons";
 import { AnimatedNumber } from "./AnimatedNumber";
+import CopyButton from "./CopyButton";
 
 const KeyRepeatInput = styled("textarea", {
   fontFamily: "$mono",
@@ -127,12 +129,17 @@ const KeyRepeat = () => {
   );
 };
 
+const INITIAL_KEY_REPEAT_COMMAND = `defaults write -g InitialKeyRepeat -int`;
+const KEY_REPEAT_COMMAND = `defaults write -g KeyRepeat -int`;
+const PRESS_AND_HOLD_COMMAND =
+  "defaults write -g ApplePressAndHoldEnabled -bool false";
+
 const Commands = () => {
   const [delay] = useAtom(delayAtom);
   const [repeat] = useAtom(repeatAtom);
 
   return (
-    <div>
+    <div role="none">
       <VStack spacing={4} align="stretch">
         <Text>
           These <em>terminal commands</em> let you set{" "}
@@ -140,26 +147,27 @@ const Commands = () => {
           <em>system preferences</em>. Copy them into your terminal to set the
           chosen key repeat timings:
         </Text>
-        <Box>
+        <HStack gap={2} align="center">
           <Code>
-            defaults write -g InitialKeyRepeat -int{" "}
-            <AnimatedNumber value={delay} />
+            {INITIAL_KEY_REPEAT_COMMAND} <AnimatedNumber value={delay} />
           </Code>
-        </Box>
-        <Box>
+          <CopyButton value={`${INITIAL_KEY_REPEAT_COMMAND} ${delay}`} />
+        </HStack>
+        <HStack gap={2} align="center">
           <Code>
-            defaults write -g KeyRepeat -int <AnimatedNumber value={repeat} />
+            {KEY_REPEAT_COMMAND} <AnimatedNumber value={repeat} />
           </Code>
-        </Box>
-
+          <CopyButton value={`${KEY_REPEAT_COMMAND} ${repeat}`} />
+        </HStack>
         <VSpacer size="xs" />
         <Text>
           Copy this command to disable <em>press and hold</em> for special
           characters:
         </Text>
-        <Box>
-          <Code>defaults write -g ApplePressAndHoldEnabled -bool false</Code>
-        </Box>
+        <HStack gap={2} align="center">
+          <Code>{PRESS_AND_HOLD_COMMAND}</Code>
+          <CopyButton value={PRESS_AND_HOLD_COMMAND} />
+        </HStack>
         <VSpacer size="xs" />
         <Text>
           <em>Note:</em> You must log out or restart for these changes to take
