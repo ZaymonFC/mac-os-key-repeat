@@ -64,33 +64,3 @@ export const Code = styled("code", {
   borderWidth: 1,
   borderRadius: "$3",
 });
-
-export const IconButton = styled("button", {
-  marginLeft: 5,
-  marginRight: 5,
-
-  paddingInline: "$3",
-  paddingBlock: "$3",
-
-  color: "$white",
-  backgroundColor: "$orange",
-
-  borderColor: "$orange",
-  borderStyle: "solid",
-  borderWidth: 1,
-  borderRadius: "$3",
-
-  "& > svg": {
-    width: "20px",
-    height: "20px",
-  },
-
-  "&:hover": {
-    transform: "scale(1.05)",
-    backgroundColor: "$orange",
-    color: "white",
-  },
-  "&:active": {
-    transform: "scale(0.95)",
-  },
-});

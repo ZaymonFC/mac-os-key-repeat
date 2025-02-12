@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   Slider,
   SliderFilledTrack,
   SliderThumb,
@@ -150,13 +149,13 @@ const Commands = () => {
           <Code>
             {INITIAL_KEY_REPEAT_COMMAND} <AnimatedNumber value={delay} />
           </Code>
-          <CopyButton value={INITIAL_KEY_REPEAT_COMMAND + " " + delay} />
+          <CopyButton value={`${INITIAL_KEY_REPEAT_COMMAND} ${delay}`} />
         </Box>
         <Box display="flex" alignItems="center" >
           <Code>
             {KEY_REPEAT_COMMAND} <AnimatedNumber value={repeat} />
           </Code>
-          <CopyButton value={KEY_REPEAT_COMMAND + " " + repeat} />
+          <CopyButton value={`${KEY_REPEAT_COMMAND} ${repeat}`} />
         </Box>
 
         <VSpacer size="xs" />
