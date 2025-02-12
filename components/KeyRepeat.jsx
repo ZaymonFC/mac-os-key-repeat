@@ -14,7 +14,12 @@ import { pure } from "../lib/utils";
 import { styled } from "../Stitches.config";
 import { VSpacer } from "./Spacers";
 import { Code, Text } from "./Typography";
-import { UpdateIcon, LapTimerIcon, KeyboardIcon, CopyIcon } from "@radix-ui/react-icons";
+import {
+  UpdateIcon,
+  LapTimerIcon,
+  KeyboardIcon,
+  CopyIcon,
+} from "@radix-ui/react-icons";
 import { AnimatedNumber } from "./AnimatedNumber";
 import CopyButton from "./CopyButton";
 
@@ -130,7 +135,8 @@ const KeyRepeat = () => {
 
 const INITIAL_KEY_REPEAT_COMMAND = `defaults write -g InitialKeyRepeat -int`;
 const KEY_REPEAT_COMMAND = `defaults write -g KeyRepeat -int`;
-const PRESS_AND_HOLD_COMMAND = "defaults write -g ApplePressAndHoldEnabled -bool false";
+const PRESS_AND_HOLD_COMMAND =
+  "defaults write -g ApplePressAndHoldEnabled -bool false";
 
 const Commands = () => {
   const [delay] = useAtom(delayAtom);
@@ -145,13 +151,13 @@ const Commands = () => {
           <em>system preferences</em>. Copy them into your terminal to set the
           chosen key repeat timings:
         </Text>
-        <Box display="flex" alignItems="center" >
+        <Box display="flex" alignItems="center">
           <Code>
             {INITIAL_KEY_REPEAT_COMMAND} <AnimatedNumber value={delay} />
           </Code>
           <CopyButton value={`${INITIAL_KEY_REPEAT_COMMAND} ${delay}`} />
         </Box>
-        <Box display="flex" alignItems="center" >
+        <Box display="flex" alignItems="center">
           <Code>
             {KEY_REPEAT_COMMAND} <AnimatedNumber value={repeat} />
           </Code>
@@ -163,7 +169,7 @@ const Commands = () => {
           Copy this command to disable <em>press and hold</em> for special
           characters:
         </Text>
-        <Box display="flex" alignItems="center" >
+        <Box display="flex" alignItems="center">
           <Code>{PRESS_AND_HOLD_COMMAND}</Code>
           <CopyButton value={PRESS_AND_HOLD_COMMAND} />
         </Box>

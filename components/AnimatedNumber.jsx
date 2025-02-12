@@ -17,7 +17,7 @@ export function AnimatedNumber({ value }) {
           ref.current.textContent = latest.toFixed(0);
         }
       }),
-    [springValue]
+    [springValue],
   );
 
   return <span ref={ref} />;
