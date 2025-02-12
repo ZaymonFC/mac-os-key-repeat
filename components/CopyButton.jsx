@@ -19,12 +19,8 @@ const CopyButton = ({ value }) => {
       aria-label={copied ? "Copied" : "Copy to clipboard"}
     >
       <HStack spacing={1}>
-        {copied ? (
-          <CheckIcon width={20} height={20} />
-        ) : (
-          <CopyIcon width={20} height={20} />
-        )}
-        <Text>{copied ? "Copied!" : "Copy"}</Text>
+        {copied ? <CheckIcon /> : <CopyIcon />}
+        <Text>{copied ? "Copied" : "Copy"}</Text>
       </HStack>
     </IconButton>
   );
