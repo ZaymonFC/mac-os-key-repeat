@@ -17,6 +17,7 @@ const CopyButton = ({ value }) => {
     <IconButton
       onClick={handleCopy}
       aria-label={copied ? "Copied" : "Copy to clipboard"}
+      style={{ userSelect: "none" }}
     >
       <HStack spacing={1}>
         {copied ? <CheckIcon /> : <CopyIcon />}
